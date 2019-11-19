@@ -1,3 +1,3 @@
 public interface Console {
-    void message(String username, String message);
+    void message(String message);
 }
