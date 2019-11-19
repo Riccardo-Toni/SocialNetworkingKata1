@@ -1,12 +1,9 @@
-import org.javatuples.Triplet;
-
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SocialNetworking {
 
-    public List<Triplet<Instant, String, String>> messageStore;
+    public List<Post> messageStore;
     private Console console;
     private DateService dateService;
 
@@ -17,16 +14,15 @@ public class SocialNetworking {
     }
 
     public void post(String name, String message) {
-        messageStore.add(new Triplet<>(dateService.getCurrentTime(),
-                name, message));
+        messageStore.add(new Post(dateService.getCurrentTime(), name, message));
     }
 
     public void getWall(String username) {
-        String messageToConsole = username +
-                " - " +
-                messageStore.get(0).getValue(2) +
-                " (5 minutes ago)";
-        console.message(messageToConsole);
+        for (Post post : messageStore) {
+            if (post.isUsername(username)) {
+                console.message(post.toString(dateService.getCurrentTime()));
+            }
+        }
     }
 
     public void follow(String personFollowing, String personToBeFollowed) {
