@@ -1,23 +1,39 @@
-
+import org.javatuples.Triplet;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.time.Instant;
+
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class SocialNetworkingShould {
+class SocialNetworkingShould {
 
-    private SocialNetworking socialNetworking;
     @Mock
     Console console;
 
     @Test
     void save_the_post_when_user_post_something() {
-        socialNetworking.post("Alice", "first message");
-        verify(console).message("Alice", "first message");
+
+        String exampleUsername = "Alice";
+        String exampleMessage = "first message";
+        Instant exampleDate = Instant.parse("1995-10-23T10:12:35Z");
+
+        SocialNetworking socialNetworking = new SocialNetworking();
+
+        socialNetworking.post(exampleUsername, exampleMessage);
+        verify(console).message(exampleUsername, exampleMessage);
+
+        Triplet<Instant, String, String> examplePost =
+                new Triplet<>(exampleDate, exampleUsername, exampleMessage);
+
+        verify(socialNetworking).messageStore.contains(examplePost);
+
+        // still need to verify
+            // time ago (5 minutes etc)
+            // following
+                // user only sees followed users
     }
 }
