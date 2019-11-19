@@ -7,4 +7,10 @@ public class DateService {
         throw new UnsupportedOperationException();
 
     }
+
+    public Instant getCurrentTime() {
+        throw new UnsupportedOperationException();
+
+
+    }
 }
